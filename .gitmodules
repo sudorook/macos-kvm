@@ -1,0 +1,3 @@
+[submodule "src/OpenCore/OcBinaryData"]
+	path = src/OpenCore/OcBinaryData
+	url = https://github.com/acidanthera/OcBinaryData.git

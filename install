@@ -11,11 +11,8 @@ if [ -f BaseSystem.img ] && [ -f "${MACOS_QCOW2}" ] && \
    [ -f "${OPENCORE_QCOW2}" ] && [ -f "${VIRSH_XML}" ] && \
    [ "${KVM_DIR}" ]; then
   pushd "${BUILD_DIR}" >/dev/null
-  cp -vf BaseSystem.img "${VIRSH_XML}" "${KVM_DIR}"
+  cp -vf BaseSystem.img "${KVM_DIR}"
   cp -vf --sparse=always "${MACOS_QCOW2}" "${OPENCORE_QCOW2}" "${KVM_DIR}"
-  popd >/dev/null
-
-  pushd "${KVM_DIR}" >/dev/null
   virt-xml-validate "${VIRSH_XML}"
   virsh --connect qemu:///system define "${VIRSH_XML}"
   popd >/dev/null

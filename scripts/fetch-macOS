@@ -311,7 +311,8 @@ def action_selfcheck(args):
         print(generic_latest)
 
     if valid_default[INFO_PRODUCT] == valid_latest[INFO_PRODUCT]:
-        # Valid MLB must give different default and latest if this is not a too new product.
+        # Valid MLB must give different default and latest if this is not a too
+        # new product.
         print(
             "ERROR: Cannot determine any previous product, got {}".format(
                 valid_default[INFO_PRODUCT]
@@ -404,8 +405,8 @@ def action_verify(args):
 
     print("UNKNOWN: Run selfcheck, check your board-id, or try again later!")
 
-    # Here we have matching default and latest products. This can only be true for very
-    # new models. These models get either latest or special builds.
+    # Here we have matching default and latest products. This can only be true
+    # for very new models. These models get either latest or special builds.
     if uvalid_default[INFO_PRODUCT] == generic_latest[INFO_PRODUCT]:
         print("UNKNOWN: {} MLB can be valid if very new!".format(args.mlb))
         return 0
@@ -479,7 +480,8 @@ def action_guess(args):
                         generic_latest[INFO_PRODUCT],
                     ]
             else:
-                # For normal lookup check when given model has mismatching normal and latest.
+                # For normal lookup check when given model has mismatching
+                # normal and latest.
                 user_latest = get_image_info(
                     session, bid=model, mlb=mlb, diag=False, os_type="latest"
                 )

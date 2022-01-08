@@ -1,0 +1,40 @@
+#! /bin/bash
+
+ROOT="$(pwd)"
+export ROOT
+
+KVM_DIR="${HOME}/.local/libvirt/images"
+export KVM_DIR
+
+SIZE=100G
+export SIZE
+
+MACOS_QCOW2=macos.qcow2
+export MACOS_QCOW2
+
+OVMF_CODE=/usr/share/edk2-ovmf/x64/OVMF_CODE.fd
+export OVMF_CODE
+
+NVRAM_VARS=/var/lib/libvirt/qemu/nvram/MACOS_VARS.fd
+export NVRAM_VARS
+
+OPENCORE_QCOW2=opencore.qcow2
+export OPENCORE_QCOW2
+
+VIRSH_XML=macOS.xml
+export VIRSH_XML
+
+CONFIG_LIST=config.plist
+export CONFIG_LIST
+
+RESOLUTION=1920x1080
+export RESOLUTION
+
+BUILD_DIR="${ROOT}/_build"
+export BUILD_DIR
+
+OPENCORE_DIR="${ROOT}/src/OpenCore"
+export OPENCORE_DIR
+
+SCRIPT_DIR="${ROOT}/scripts"
+export SCRIPT_DIR

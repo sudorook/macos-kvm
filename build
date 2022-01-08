@@ -1,0 +1,49 @@
+#! /bin/bash
+set -eu
+source globals
+
+#
+# Functions
+#
+
+# Download images and generate QCOW2 files
+function get_macos_images {
+  pushd "${BUILD_DIR}" >/dev/null
+
+  if ! [ -f BaseSystem.dmg ]; then
+    "${SCRIPT_DIR}"/fetch-macOS
+    sync
+  fi
+
+  qemu-img convert BaseSystem.dmg -O raw BaseSystem.img
+  if [ -f "${MACOS_QCOW2}" ]; then
+    rm -f "${MACOS_QCOW2}"
+  fi
+  qemu-img create -f qcow2 "${MACOS_QCOW2}" "${SIZE}"
+  
+  sed \
+    -e "s|##KVM_DIR##|${KVM_DIR}|g" \
+    -e "s|##OVMF_CODE##|${OVMF_CODE}|g" \
+    -e "s|##NVRAM_VARS##|${NVRAM_VARS}|g" \
+    -e "s|##MACOS_QCOW2##|${MACOS_QCOW2}|g" \
+    -e "s|##OPENCORE_QCOW2##|${OPENCORE_QCOW2}|g" \
+    "${ROOT}/src/XML/${VIRSH_XML}.in" > "${VIRSH_XML}"
+  
+  popd >/dev/null
+}
+
+
+#
+# Make build directory.
+#
+
+if [ -d "${BUILD_DIR}" ]; then
+  echo "ERROR: ${BUILD_DIR@Q} already exists. Exiting."
+  exit 1
+fi
+
+mkdir -p "${BUILD_DIR}"
+get_macos_images
+git submodule update --init
+sudo ./build_opencore
+echo "Done"

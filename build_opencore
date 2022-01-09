@@ -86,7 +86,7 @@ WORK="$(mktemp -d)"
 trap 'do_cleanup' EXIT INT TERM ERR
 
 # generate plist config
-sed -e "s|##RESOLUTION|${RESOLUTION}##|g" "${CONFIG_LIST}.in" > \
+sed -e "s|##RESOLUTION##|${RESOLUTION}|g" "${CONFIG_LIST}.in" > \
   "${BUILD_DIR}/${CONFIG_LIST}"
 
 msg "copy files from local folder"

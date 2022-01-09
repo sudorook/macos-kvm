@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-set -eu
+set -Eeuo pipefail
 source globals
+
+! check_command guestfish git && exit
 
 ######################################################################
 # defaults
@@ -12,15 +14,8 @@ source globals
 ######################################################################
 # define helper functions
 
-function msg {
-  local txt="$1"
-  local bold="\x1b[1m"
-  local normal="\x1b[0m"
-  echo -e "${bold}### ${txt}${normal}"
-}
-
 function do_cleanup {
-  msg "cleaning up ..."
+  show_info "Cleaning up..." >&2
   if test "${GUESTFISH_PID}" != ""; then
     guestfish --remote -- exit >/dev/null 2>&1 || true
   fi
@@ -32,7 +27,7 @@ function do_cleanup {
 # guestfish script helpers
 
 function fish {
-  echo "#" "$@"
+  show_info "# $*" >&2
   guestfish --remote -- "$@"    || exit 1
 }
 
@@ -48,7 +43,7 @@ function fish_init {
       ;;
   esac
 
-  msg "creating and adding disk image"
+  show_info "Creating and adding disk image." >&2
   fish disk-create "${BUILD_DIR}/${OPENCORE_QCOW2}" "${format}" 384M
   fish add "${BUILD_DIR}/${OPENCORE_QCOW2}"
   fish run
@@ -63,12 +58,12 @@ function fish_finish {
 # sanity checks
 
 if test ! -f "${OPENCORE_DIR}/${CONFIG_LIST}.in"; then
-  echo "ERROR: cfg ${CONFIG_LIST} not found. Exiting."
+  show_error "ERROR: cfg ${CONFIG_LIST} not found. Exiting." >&2
   exit 1
 fi
 
 if test -f "${OPENCORE_QCOW2}"; then
-  echo "ERROR: image ${OPENCORE_QCOW2} exists. Exiting."
+  show_error "ERROR: image ${OPENCORE_QCOW2} exists. Exiting." >&2
   exit 1
 fi
 
@@ -86,13 +81,13 @@ trap 'do_cleanup' EXIT INT TERM ERR
 sed -e "s|##RESOLUTION##|${RESOLUTION}|g" "${CONFIG_LIST}.in" > \
   "${BUILD_DIR}/${CONFIG_LIST}"
 
-msg "copy files from local folder"
+show_info "Copying files from local folder to image." >&2
 cp -a "${OPENCORE_DIR}/EFI" "${WORK}"
 
 export LIBGUESTFS_BACKEND=direct
 eval "$(guestfish --listen)"
 if test "${GUESTFISH_PID}" = ""; then
-  echo "ERROR: starting guestfish failed. Exiting."
+  show_error "ERROR: starting guestfish failed. Exiting." >&2
   exit 1
 fi
 
@@ -101,7 +96,7 @@ git submodule update --init
 
 fish_init
 
-msg "partitioning disk image"
+show_info "partitioning disk image" >&2
 fish part-init /dev/sda gpt
 fish part-add /dev/sda p 2048 300000
 fish part-add /dev/sda p 302048 -2048
@@ -113,7 +108,7 @@ fish mount /dev/sda2 /
 fish mkdir /ESP
 fish mount /dev/sda1 /ESP
 
-msg "copy files to disk image"
+show_info "copy files to disk image" >&2
 cp -v "${BUILD_DIR}/${CONFIG_LIST}" "${WORK}/config.plist"
 fish mkdir /ESP/EFI
 fish mkdir /ESP/EFI/OC

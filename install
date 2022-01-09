@@ -2,8 +2,10 @@
 set -eu
 source globals
 
+! check_command virsh virt-xml-validate && exit 3
+
 if ! [ -d "${BUILD_DIR}" ]; then
-  echo "ERROR: build directory missing. Exiting."
+  show_error "ERROR: build directory ${BUILD_DIR@Q} missing. Exiting." >&2
   exit 1
 fi
 

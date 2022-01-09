@@ -2,6 +2,8 @@
 set -eu
 source globals
 
+! check_command qemu-img && exit 3
+
 #
 # Functions
 #
@@ -38,11 +40,11 @@ function get_macos_images {
 #
 
 if [ -d "${BUILD_DIR}" ]; then
-  echo "ERROR: ${BUILD_DIR@Q} already exists. Exiting."
+  show_error "ERROR: ${BUILD_DIR@Q} already exists. Exiting." >&2
   exit 1
 fi
 
 mkdir -p "${BUILD_DIR}"
 get_macos_images
 sudo ./build_opencore
-echo "Done"
+show_success "Done!" >&2

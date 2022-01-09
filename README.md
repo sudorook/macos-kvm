@@ -36,3 +36,13 @@ tweaked as needed. There are three SATA virtualized drives. One for the
 OpenCore boot image, another for the actual macOS installation, and the last
 one containing the installation image. Once the install process is completed,
 the third image can be removed.
+
+## Notes
+
+1. Drag-and-drop from the host system to the guest.
+2. There is no clipboard sharing.
+3. To change guest display resolution, a new OpenCore image needs to be built
+   and substituted in the place of the old one.
+4. The firmware images are hard-coded to their Arch Linux paths when the
+   `edk2-ovmf` package is installed. The path may need to be changed for other
+   distros.

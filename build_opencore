@@ -73,9 +73,6 @@ if test -f "${OPENCORE_QCOW2}"; then
 fi
 
 
-# git clone https://github.com/acidanthera/OcBinaryData.git
-# git subodule --init
-
 ######################################################################
 # go!
 
@@ -98,6 +95,9 @@ if test "${GUESTFISH_PID}" = ""; then
   echo "ERROR: starting guestfish failed. Exiting."
   exit 1
 fi
+
+show_info "Downloading OcBinaryData..." >&2
+git submodule update --init
 
 fish_init
 

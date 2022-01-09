@@ -44,6 +44,5 @@ fi
 
 mkdir -p "${BUILD_DIR}"
 get_macos_images
-git submodule update --init
 sudo ./build_opencore
 echo "Done"

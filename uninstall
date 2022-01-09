@@ -1,0 +1,18 @@
+#! /bin/bash
+set -eu
+source globals
+
+! show_command virsh && exit 3
+
+# Stop macOS VM if it is running.
+if ! [ "$(virsh list --all | grep running | grep macOS)" = "" ]; then
+  show_warning "WARNING: macOS domain is running. Stopping it now..."
+  virsh -c qemu:///system destroy macOS
+fi
+
+virsh -c qemu:///system undefine macOS
+rm -vf "${KVM_DIR}/${MACOS_QCOW2}"
+rm -vf "${KVM_DIR}/${OPENCORE_QCOW2}"
+rm -vf "${KVM_DIR}/BaseSystem.img"
+
+show_info "Done!"

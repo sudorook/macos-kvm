@@ -1,6 +1,7 @@
 #! /bin/bash
 
-ROOT="$(dirname "${0}")"
+BASE="$(dirname "${0}")"
+ROOT="$(realpath "${BASE}")"
 KVM_DIR="${HOME}/.local/libvirt/images"
 SIZE=100G
 MACOS_QCOW2=macos.qcow2

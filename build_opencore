@@ -83,8 +83,9 @@ WORK="$(mktemp -d)"
 trap 'do_cleanup' EXIT INT TERM ERR
 
 # generate plist config
-sed -e "s|##RESOLUTION##|${RESOLUTION}|g" "${CONFIG_LIST}.in" > \
-  "${BUILD_DIR}/${CONFIG_LIST}"
+sed -e \
+  "s|##RESOLUTION##|${RESOLUTION}|g" \
+  "${OPENCORE_DIR}/${CONFIG_LIST}.in" > "${BUILD_DIR}/${CONFIG_LIST}"
 
 show_info "Copying files from local folder to image." >&2
 cp -a "${OPENCORE_DIR}/EFI" "${WORK}"

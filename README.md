@@ -1,6 +1,7 @@
 # macOS KVM Builder
 
-Minimal set of instructions for building a macOS KVM image for Arch Linux.
+Minimal set of instructions for building a macOS KVM image on an Arch Linux
+host.
 
 ## Dependencies
 
@@ -39,7 +40,7 @@ the third image can be removed.
 
 ## Notes
 
-1. Drag-and-drop from the host system to the guest.
+1. Drag-and-drop from the host system to the guest is not supported.
 2. There is no clipboard sharing.
 3. To change guest display resolution, a new OpenCore image needs to be built
    and substituted in the place of the old one.

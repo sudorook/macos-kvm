@@ -4,15 +4,17 @@ source "$(dirname "${0}")/globals"
 
 ! check_command guestfish git && exit
 
-######################################################################
-# defaults
+#
+# Globals
+#
 
 # export LIBGUESTFS_DEBUG=1
 # export LIBGUESTFS_TRACE=1
 
 
-######################################################################
-# define helper functions
+#
+# Define helper functions
+#
 
 function do_cleanup {
   show_info "Cleaning up..." >&2
@@ -23,12 +25,13 @@ function do_cleanup {
 }
 
 
-######################################################################
+#
 # guestfish script helpers
+#
 
 function fish {
   show_info "# $*" >&2
-  guestfish --remote -- "$@"    || exit 1
+  guestfish --remote -- "$@"    || exit 3
 }
 
 function fish_init {
@@ -54,22 +57,24 @@ function fish_finish {
 }
 
 
-######################################################################
-# sanity checks
+#
+# Run sanity checks
+#
 
 if test ! -f "${OPENCORE_DIR}/${CONFIG_LIST}.in"; then
-  show_error "ERROR: cfg ${CONFIG_LIST} not found. Exiting." >&2
-  exit 1
+  show_error "ERROR: ${CONFIG_LIST@Q} not found. Exiting." >&2
+  exit 3
 fi
 
 if test -f "${OPENCORE_QCOW2}"; then
-  show_error "ERROR: image ${OPENCORE_QCOW2} exists. Exiting." >&2
-  exit 1
+  show_error "ERROR: ${OPENCORE_QCOW2@Q} exists. Exiting." >&2
+  exit 3
 fi
 
 
-######################################################################
-# go!
+#
+# Main
+#
 
 pushd "${OPENCORE_DIR}" >/dev/null
 
@@ -88,7 +93,7 @@ export LIBGUESTFS_BACKEND=direct
 eval "$(guestfish --listen)"
 if test "${GUESTFISH_PID}" = ""; then
   show_error "ERROR: starting guestfish failed. Exiting." >&2
-  exit 1
+  exit 3
 fi
 
 show_info "Downloading OcBinaryData..." >&2

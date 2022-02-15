@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
-source globals
+source "$(dirname "${0}")/globals"
 
 ! check_command guestfish git && exit
 

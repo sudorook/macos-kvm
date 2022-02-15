@@ -1,6 +1,6 @@
 #! /bin/bash
 set -eu
-source globals
+source "$(dirname "${0}")/globals"
 
 ! show_command virsh && exit 3
 

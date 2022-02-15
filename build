@@ -1,6 +1,6 @@
 #! /bin/bash
 set -eu
-source globals
+source "$(dirname "${0}")/globals"
 
 ! check_command qemu-img && exit 3
 

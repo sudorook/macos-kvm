@@ -23,15 +23,17 @@ function get_macos_images {
   fi
   qemu-img create -f qcow2 "${MACOS_QCOW2}" "${SIZE}"
   
+  popd >/dev/null
+}
+
+function generate_virsh_xml {
   sed \
     -e "s|##KVM_DIR##|${KVM_DIR}|g" \
     -e "s|##OVMF_CODE##|${OVMF_CODE}|g" \
     -e "s|##NVRAM_VARS##|${NVRAM_VARS}|g" \
     -e "s|##MACOS_QCOW2##|${MACOS_QCOW2}|g" \
     -e "s|##OPENCORE_QCOW2##|${OPENCORE_QCOW2}|g" \
-    "${ROOT}/src/XML/${VIRSH_XML}.in" > "${VIRSH_XML}"
-  
-  popd >/dev/null
+    "${ROOT}/src/XML/${VIRSH_XML}.in" > "${BUILD_DIR}/${VIRSH_XML}"
 }
 
 
@@ -46,5 +48,6 @@ fi
 
 mkdir -p "${BUILD_DIR}"
 get_macos_images
+generate_virsh_xml
 sudo ./build_opencore
 show_success "Done!" >&2

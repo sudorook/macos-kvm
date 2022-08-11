@@ -93,7 +93,7 @@ cp -a "${OPENCORE_DIR}/EFI" "${WORK}"
 export LIBGUESTFS_BACKEND=direct
 eval "$(guestfish --listen)"
 if test "${GUESTFISH_PID}" = ""; then
-  show_error "ERROR: starting guestfish failed. Exiting." >&2
+  show_error "ERROR: Starting guestfish failed. Exiting." >&2
   exit 3
 fi
 

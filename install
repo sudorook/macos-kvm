@@ -5,7 +5,7 @@ source "$(dirname "${0}")/globals"
 ! check_command virsh virt-xml-validate && exit 3
 
 if ! [ -d "${BUILD_DIR}" ]; then
-  show_error "ERROR: build directory ${BUILD_DIR@Q} missing. Exiting." >&2
+  show_error "ERROR: Build directory ${BUILD_DIR@Q} missing. Exiting." >&2
   exit 1
 fi
 

@@ -196,7 +196,7 @@ def save_image(url, sess, filename="", directory=""):
     with open(os.path.join(directory, filename), "wb") as fhandle:
         response = run_query(url, headers, raw=True)
 
-        total_size = int(response.headers["content-length"]) / float(2 ** 20)
+        total_size = int(response.headers["content-length"]) / float(2**20)
         # print(total_size)
         if total_size < 1:
             total_size = response.headers["content-length"]
@@ -205,12 +205,12 @@ def save_image(url, sess, filename="", directory=""):
             print("Note: The total download size is %0.2f MB" % total_size)
         size = 0
         while True:
-            chunk = response.read(2 ** 20)
+            chunk = response.read(2**20)
             if not chunk:
                 break
             fhandle.write(chunk)
             size += len(chunk)
-            print("\r{} MBs downloaded...".format(size / (2 ** 20)), end="")
+            print("\r{} MBs downloaded...".format(size / (2**20)), end="")
             sys.stdout.flush()
         print("\rDownload complete!" + " " * 32)
 

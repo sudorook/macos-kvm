@@ -18,6 +18,9 @@ if [ -f BaseSystem.img ] && [ -f "${MACOS_QCOW2}" ] && \
   cp -vf --sparse=always "${MACOS_QCOW2}" "${OPENCORE_QCOW2}" "${KVM_DIR}"
   virt-xml-validate "${VIRSH_XML}"
   virsh --connect qemu:///system define "${VIRSH_XML}"
+else
+  show_error "ERROR: Required files missing."
+  exit 1
 fi
 
 popd >/dev/null

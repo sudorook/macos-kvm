@@ -598,7 +598,7 @@ def main():
         "--shortname",
         type=str,
         default="",
-        help="available options: high-sierra, mojave, catalina, big-sur, monterey",
+        help="available options: high-sierra, mojave, catalina, big-sur, monterey, ventura",
     )
     parser.add_argument(
         "-v", "--verbose", action="store_true", help="print debug information"
@@ -651,17 +651,24 @@ def main():
             "short": "catalina",
         },
         {
-            "name": "Big Sur (11.6) - RECOMMENDED",
+            "name": "Big Sur (11.7) - RECOMMENDED",
             "b": "Mac-2BD1B31983FE1663",
             "m": "00000000000000000",
             "short": "big-sur",
         },
         {
-            "name": "Monterey (latest)",
-            "b": "Mac-7BA5B2D9E42DDD94",
+            "name": "Monterey (12.6)",
+            "b": "Mac-B809C3757DA9BB8D",
             "m": "00000000000000000",
             "os_type": "latest",
             "short": "monterey",
+        },
+        {
+            "name": "Ventura (13)",
+            "b": "Mac-7BA5B2D9E42DDD94",
+            "m": "00000000000000000",
+            "os_type": "latest",
+            "short": "ventura",
         },
     ]
 

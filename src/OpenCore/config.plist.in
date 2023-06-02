@@ -702,6 +702,24 @@
         <key>PlistPath</key>
         <string>Contents/Info.plist</string>
       </dict>
+      <dict>
+        <key>Arch</key>
+        <string>x86_64</string>
+        <key>BundlePath</key>
+        <string>CryptexFixup.kext</string>
+        <key>Comment</key>
+        <string>Support for non-AVX2 CPUs in Ventura</string>
+        <key>Enabled</key>
+        <true/>
+        <key>ExecutablePath</key>
+        <string>Contents/MacOS/CryptexFixup</string>
+        <key>MaxKernel</key>
+        <string>22.99.99</string>
+        <key>MinKernel</key>
+        <string>22.1.0</string>
+        <key>PlistPath</key>
+        <string>Contents/Info.plist</string>
+      </dict>
     </array>
     <key>Block</key>
     <array>
@@ -807,7 +825,7 @@
         <key>Base</key>
         <string></string>
         <key>Comment</key>
-        <string>algrey - thenickdude - cpuid_set_cpufamily - force CPUFAMILY_INTEL_PENRYN (Big Sur 11.3+, Monterey)</string>
+        <string>algrey - thenickdude - cpuid_set_cpufamily - force CPUFAMILY_INTEL_PENRYN (Big Sur 11.3+, Monterey, Ventura)</string>
         <key>Count</key>
         <integer>1</integer>
         <key>Enabled</key>
@@ -825,7 +843,7 @@
           ////////AAAAAP//
         </data>
         <key>MaxKernel</key>
-        <string>21.99.99</string>
+        <string>22.99.99</string>
         <key>MinKernel</key>
         <string>20.4.0</string>
         <key>Replace</key>
@@ -893,6 +911,36 @@
         <string>20.4.0</string>
         <key>Replace</key>
         <data>ukgBAADrBQ==</data>
+        <key>ReplaceMask</key>
+        <data></data>
+        <key>Skip</key>
+        <integer>0</integer>
+      </dict>
+      <dict>
+        <key>Arch</key>
+        <string>x86_64</string>
+        <key>Base</key>
+        <string>_apfs_filevault_allowed</string>
+        <key>Comment</key>
+        <string>Force FileVault on Broken Seal (from OCLP project, for non-AVX2 Ventura patch)</string>
+        <key>Count</key>
+        <integer>0</integer>
+        <key>Enabled</key>
+        <true/>
+        <key>Find</key>
+        <data></data>
+        <key>Identifier</key>
+        <string>com.apple.filesystems.apfs</string>
+        <key>Limit</key>
+        <integer>0</integer>
+        <key>Mask</key>
+        <data></data>
+        <key>MaxKernel</key>
+        <string>22.99.99</string>
+        <key>MinKernel</key>
+        <string>22.1.0</string>
+        <key>Replace</key>
+        <data>uAEAAADD</data>
         <key>ReplaceMask</key>
         <data></data>
         <key>Skip</key>
@@ -1061,6 +1109,8 @@
         <true/>
         <key>Flavour</key>
         <string>OpenShell:UEFIShell:Shell</string>
+        <key>FullNvramAccess</key>
+        <false/>
         <key>Name</key>
         <string>UEFI Shell</string>
         <key>Path</key>
@@ -1081,6 +1131,8 @@
         <false/>
         <key>Flavour</key>
         <string>MemTest</string>
+        <key>FullNvramAccess</key>
+        <false/>
         <key>Name</key>
         <string>memtest86</string>
         <key>Path</key>
@@ -1101,6 +1153,8 @@
         <false/>
         <key>Flavour</key>
         <string>Auto</string>
+        <key>FullNvramAccess</key>
+        <false/>
         <key>Name</key>
         <string>Shutdown</string>
         <key>Path</key>
@@ -1160,8 +1214,6 @@
         <string>ForceDisplayRotationInEFI</string>
       </array>
     </dict>
-    <key>LegacyEnable</key>
-    <false/>
     <key>LegacyOverwrite</key>
     <false/>
     <key>LegacySchema</key>
@@ -1308,9 +1360,35 @@
         <key>Arguments</key>
         <string></string>
         <key>Comment</key>
+        <string></string>
+        <key>Enabled</key>
+        <false/>
+        <key>LoadEarly</key>
+        <true/>
+        <key>Path</key>
+        <string>OpenVariableRuntimeDxe.efi</string>
+      </dict>
+      <dict>
+        <key>Arguments</key>
+        <string></string>
+        <key>Comment</key>
+        <string></string>
+        <key>Enabled</key>
+        <true/>
+        <key>LoadEarly</key>
+        <false/>
+        <key>Path</key>
+        <string>OpenRuntime.efi</string>
+      </dict>
+      <dict>
+        <key>Arguments</key>
+        <string></string>
+        <key>Comment</key>
         <string>HFS+ Driver</string>
         <key>Enabled</key>
         <true/>
+        <key>LoadEarly</key>
+        <false/>
         <key>Path</key>
         <string>OpenHfsPlus.efi</string>
       </dict>
@@ -1321,16 +1399,8 @@
         <string></string>
         <key>Enabled</key>
         <true/>
-        <key>Path</key>
-        <string>OpenRuntime.efi</string>
-      </dict>
-      <dict>
-        <key>Arguments</key>
-        <string></string>
-        <key>Comment</key>
-        <string></string>
-        <key>Enabled</key>
-        <true/>
+        <key>LoadEarly</key>
+        <false/>
         <key>Path</key>
         <string>OpenCanopy.efi</string>
       </dict>
@@ -1340,6 +1410,8 @@
         <key>Comment</key>
         <string></string>
         <key>Enabled</key>
+        <false/>
+        <key>LoadEarly</key>
         <false/>
         <key>Path</key>
         <string>AudioDxe.efi</string>
@@ -1351,6 +1423,8 @@
         <string></string>
         <key>Enabled</key>
         <true/>
+        <key>LoadEarly</key>
+        <false/>
         <key>Path</key>
         <string>OpenPartitionDxe.efi</string>
       </dict>
@@ -1360,6 +1434,8 @@
         <key>Comment</key>
         <string></string>
         <key>Enabled</key>
+        <false/>
+        <key>LoadEarly</key>
         <false/>
         <key>Path</key>
         <string>OpenUsbKbDxe.efi</string>
@@ -1371,6 +1447,8 @@
         <string></string>
         <key>Enabled</key>
         <false/>
+        <key>LoadEarly</key>
+        <false/>
         <key>Path</key>
         <string>UsbMouseDxe.efi</string>
       </dict>
@@ -1380,6 +1458,8 @@
         <key>Comment</key>
         <string></string>
         <key>Enabled</key>
+        <false/>
+        <key>LoadEarly</key>
         <false/>
         <key>Path</key>
         <string>Ps2KeyboardDxe.efi</string>
@@ -1391,6 +1471,8 @@
         <string></string>
         <key>Enabled</key>
         <false/>
+        <key>LoadEarly</key>
+        <false/>
         <key>Path</key>
         <string>Ps2MouseDxe.efi</string>
       </dict>
@@ -1400,6 +1482,8 @@
         <key>Comment</key>
         <string></string>
         <key>Enabled</key>
+        <false/>
+        <key>LoadEarly</key>
         <false/>
         <key>Path</key>
         <string>HiiDatabase.efi</string>
@@ -1411,6 +1495,8 @@
         <string></string>
         <key>Enabled</key>
         <false/>
+        <key>LoadEarly</key>
+        <false/>
         <key>Path</key>
         <string>NvmExpressDxe.efi</string>
       </dict>
@@ -1420,6 +1506,8 @@
         <key>Comment</key>
         <string></string>
         <key>Enabled</key>
+        <false/>
+        <key>LoadEarly</key>
         <false/>
         <key>Path</key>
         <string>XhciDxe.efi</string>
@@ -1431,6 +1519,8 @@
         <string></string>
         <key>Enabled</key>
         <false/>
+        <key>LoadEarly</key>
+        <false/>
         <key>Path</key>
         <string>ExFatDxe.efi</string>
       </dict>
@@ -1440,6 +1530,8 @@
         <key>Comment</key>
         <string></string>
         <key>Enabled</key>
+        <false/>
+        <key>LoadEarly</key>
         <false/>
         <key>Path</key>
         <string>CrScreenshotDxe.efi</string>
@@ -1451,8 +1543,10 @@
         <string></string>
         <key>Enabled</key>
         <false/>
+        <key>LoadEarly</key>
+        <false/>
         <key>Path</key>
-        <string>ext4_x64.efi</string>
+        <string>Ext4Dxe.efi</string>
       </dict>
       <dict>
         <key>Arguments</key>
@@ -1460,6 +1554,8 @@
         <key>Comment</key>
         <string></string>
         <key>Enabled</key>
+        <false/>
+        <key>LoadEarly</key>
         <false/>
         <key>Path</key>
         <string>OpenLinuxBoot.efi</string>
@@ -1471,6 +1567,8 @@
         <string></string>
         <key>Enabled</key>
         <true/>
+        <key>LoadEarly</key>
+        <false/>
         <key>Path</key>
         <string>ResetNvramEntry.efi</string>
       </dict>
@@ -1480,6 +1578,8 @@
         <key>Comment</key>
         <string></string>
         <key>Enabled</key>
+        <false/>
+        <key>LoadEarly</key>
         <false/>
         <key>Path</key>
         <string>ToggleSipEntry.efi</string>
